@@ -1,7 +1,8 @@
-const startConsumer = require("./kafka/consumer");
+const { startEmailService } = require("./emailService");
 
-// Start the consumer
-startConsumer()
+console.log('-----Email Service-----')
+// Start Email Service
+startEmailService()
   .then(() => {
     console.log("Kafka consumer started");
   })

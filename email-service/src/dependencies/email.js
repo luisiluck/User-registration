@@ -5,11 +5,7 @@ const sendVerificationEmail =  async function(user) {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'localhost',
     port: parseInt(process.env.SMTP_PORT || '1025'),
-    secure: false, // true para 465, false para otros puertos
-    // auth: {
-    //   user: process.env.SMTP_USER,
-    //   pass: process.env.SMTP_PASS
-    // }
+    secure: false,
   });
 
   const verifyUrl = `http://localhost:3000/verify?t=${user.verificationToken}`;

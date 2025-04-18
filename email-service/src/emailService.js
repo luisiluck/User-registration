@@ -1,11 +1,11 @@
 const { Kafka } = require("kafkajs");
-const sendVerificationEmail = require("../email");
-const publishVerificationRequested = require("./producer");
+const sendVerificationEmail = require("./dependencies/email");
+const publishVerificationRequested = require("./dependencies/producer");
 
 const kafka = new Kafka({ clientId: "email-service", brokers: ["localhost:9092"] });
 const consumer = kafka.consumer({ groupId: "email-service" });
 
-const startConsumer = async function() {
+async function startEmailService() {
 
   await consumer.connect();
   await consumer.subscribe({ topic: "user.registered", fromBeginning: true });
@@ -28,4 +28,8 @@ const startConsumer = async function() {
   });
 }
 
-module.exports = startConsumer;
+async function stopEmailService(){
+  await consumer.disconnect()
+}
+
+module.exports = {startEmailService, stopEmailService};

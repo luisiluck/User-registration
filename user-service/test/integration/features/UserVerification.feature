@@ -21,3 +21,18 @@ And a "user.verified" event should be produced with...
   """
   {"email": "user2@mail.co"}
   """
+
+Scenario Outline: SC-011 Trying user verification with invalid token
+When a "GET" request is sent to "/verify" with...
+  """
+  {"query":<token>}
+  """
+Then a <status> response should be received with...
+  """
+  { "error": "unknown"}
+  """
+Examples:
+  | token                  | status |
+  | {"t": "invalid token"} | 404    |
+  | {"t": true}            | 404    |
+  | {}                     | 400    |
