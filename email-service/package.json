@@ -5,7 +5,7 @@
     "scripts": {
         "start": "node src/index.js",
         "test": "mocha 'test/unit/**/*.js'",
-        "integration:test": "cucumber-js test/integration/features/**/*.feature"
+        "integration:test:email": "cucumber-js test/integration/features/**/*.feature"
     },
     "dependencies": {
         "kafkajs": "^2.2.4",

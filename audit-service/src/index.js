@@ -1,7 +1,7 @@
-const startConsumer = require("./kafka");
+const { startAuditService } = require("./auditService");
 
 // Start the consumer
-startConsumer()
+startAuditService()
   .then(() => {
     console.log("Kafka consumer started");
   })
