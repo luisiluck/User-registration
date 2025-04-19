@@ -19,6 +19,7 @@ services:
     ports:
       - "9092:9092"
       - "9997:9997"
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -86,6 +87,38 @@ services:
       MP_DATABASE: /data/mailpit.db
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
+  
+  audit:
+    image: audit-service
+    container_name: audit
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
+    environment:
+      - KAFKA_BROKERS=kafka:29092
+      - MONGODB_URI=mongodb://db:27017
+
+  email:
+    image: email-service
+    container_name: email
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
+    environment:
+      - KAFKA_BROKERS=kafka:29092
+      - SMTP_HOST=mailpit  
+
+  user:
+    image: user-service
+    container_name: user
+    ports:
+      - "3000:3000"
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
+    environment:
+      - KAFKA_BROKERS=kafka:29092
+      - MONGODB_URI=mongodb://db:27017
 
 
 volumes:

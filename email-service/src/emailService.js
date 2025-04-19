@@ -2,7 +2,8 @@ const { Kafka } = require("kafkajs");
 const sendVerificationEmail = require("./dependencies/email");
 const publishVerificationRequested = require("./dependencies/producer");
 
-const kafka = new Kafka({ clientId: "email-service", brokers: ["localhost:9092"] });
+const brokers = process.env.KAFKA_BROKERS?.split(',') || ["localhost:9092"]
+const kafka = new Kafka({ clientId: "email-service", brokers: brokers });
 const consumer = kafka.consumer({ groupId: "email-service" });
 
 async function startEmailService() {

@@ -5,7 +5,7 @@ let producer;
 async function connectKafka() {
   const kafka = new Kafka({
     clientId: 'user-registration-service',
-    brokers: ['localhost:9092'] 
+    brokers: process.env.KAFKA_BROKERS?.split(',') || ["localhost:9092"]
   });
   producer = kafka.producer();
   await producer.connect();

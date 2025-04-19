@@ -1,6 +1,7 @@
 const { Kafka } = require("kafkajs");
 
-const kafka = new Kafka({ clientId: "email-service", brokers: ["localhost:9092"] });
+const brokers = process.env.KAFKA_BROKERS?.split(',') || ["localhost:9092"]
+const kafka = new Kafka({ clientId: "email-service", brokers: brokers });
 const producer = kafka.producer();
 
 const publishVerificationRequested = async function(data) {

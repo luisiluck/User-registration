@@ -1,7 +1,8 @@
 const { Kafka } = require("kafkajs");
 const { createAudit, disconnectDb } = require("./db")
 
-const kafka = new Kafka({ clientId: "audit-service", brokers: ["localhost:9092"] });
+const brokers = process.env.KAFKA_BROKERS?.split(',') || ["localhost:9092"]
+const kafka = new Kafka({ clientId: "audit-service", brokers: brokers });
 const consumer = kafka.consumer({ groupId: "audit-service" });
 
 const startAuditService = async function() {
