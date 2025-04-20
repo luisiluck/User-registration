@@ -9,7 +9,7 @@ const UserFactory = require('./userFactory');
 const ApiClient = require('./apiClient');
 const MailBox = require('./mailbox')
 
-setDefaultTimeout(120000);
+setDefaultTimeout(240000);
 
 let kafkaClient;
 let dbClient;
