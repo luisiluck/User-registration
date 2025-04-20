@@ -28,20 +28,29 @@ jobs:
         with:
           string: ${{ github.repository }}
 
-      - name: Build the Docker image for user-service
-        run: cd user-service && docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}/user-service:latest .
+      - name: Build and push user-service
+        uses: docker/build-push-action@v5
+        with:
+          context: user-service/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ steps.string.outputs.lowercase }}/user-service:latest
 
-      - name: Push the Docker image of user-service
-        run: docker push ghcr.io/${{ steps.string.outputs.lowercase }}/user-service:latest && cd ..
+      - name: Build and push email-service
+        uses: docker/build-push-action@v5
+        with:
+          context: email-service/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ steps.string.outputs.lowercase }}/email-service:latest
 
-      - name: Build the Docker image for email-service
-        run: cd email-service && docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}/email-service:latest .
-
-      - name: Push the Docker image of email-service
-        run: docker push ghcr.io/${{ steps.string.outputs.lowercase }}/email-service:latest && cd ..
-
-      - name: Build the Docker image for audit-service
-        run: cd audit-service && docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}/audit-service:latest .
-
-      - name: Push the Docker image of audit-service
-        run: docker push ghcr.io/${{ steps.string.outputs.lowercase }}/audit-service:latest && cd ..  
+      - name: Build and push audit-service
+        uses: docker/build-push-action@v5
+        with:
+          context: audit-service/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ steps.string.outputs.lowercase }}/audit-service:latest 
