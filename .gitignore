@@ -140,3 +140,6 @@ dist
 
 #vscode config
 .vscode
+
+#Reports
+reports

@@ -8,7 +8,7 @@ const sendVerificationEmail =  async function(user) {
     secure: false,
   });
 
-  const verifyUrl = `http://localhost:3000/verify?t=${user.verificationToken}`;
+  const verifyUrl = `${process.env.API_HOST || 'http://localhost:3000'}/verify?t=${user.verificationToken}`;
 
   await transporter.sendMail({
     from: "no-reply@yourdomain.com",
