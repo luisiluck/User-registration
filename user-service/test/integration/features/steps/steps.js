@@ -50,5 +50,5 @@ BeforeAll(async function () {
 AfterAll(async function () {
     await sut.stopDependencies();
     await kafkaClient.getConsumer().disconnect()
-    await environment.down({ timeout: 10 })
+    await environment.down()
 })

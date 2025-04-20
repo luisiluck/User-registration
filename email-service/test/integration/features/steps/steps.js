@@ -45,5 +45,5 @@ After(async function (){
 
 AfterAll(async function () {
     await kafkaClient.getConsumer().disconnect()
-    environment.down({ timeout: 10 })
+    environment.down()
 })
