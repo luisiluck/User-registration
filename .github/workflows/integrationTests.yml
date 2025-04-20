@@ -28,7 +28,7 @@ jobs:
         run: cd audit-service && npm install && npm run integration:test:audit && cd ..
 
       - name: Annotations for audit-service
-        uses: deblockt/cucumber-report-annotations-action@v1.7
+        uses: deblockt/cucumber-report-annotations-action@v1.17
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           path: "audit-service/reports/report.json"
@@ -36,7 +36,7 @@ jobs:
           show-global-summary-report: true
 
       - name: Annotations for email-service
-        uses: deblockt/cucumber-report-annotations-action@v1.7
+        uses: deblockt/cucumber-report-annotations-action@v1.17
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           path: "email-service/reports/report.json"
@@ -44,7 +44,7 @@ jobs:
           show-global-summary-report: true
 
       - name: Annotations for user-service
-        uses: deblockt/cucumber-report-annotations-action@v1.7
+        uses: deblockt/cucumber-report-annotations-action@v1.17
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           path: "user-service/reports/report.json"
