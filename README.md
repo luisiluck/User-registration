@@ -1,6 +1,6 @@
 # User Registration & Email Verification System
 
-## Overview     
+## Overview
 
 This system allows users to register with their email and password, and requires email verification to activate the account. It follows a service-oriented architecture and includes event-driven communication via Kafka.
 
