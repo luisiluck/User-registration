@@ -23,6 +23,9 @@ This system allows users to register with their email and password, and requires
 > User registration sequence
 ![sequence diagram](src/sequence.jpg)
 
+>Deploy view
+![deploy diagram](src/deploydiagram.jpg)
+
 ## Technologies
 
 - **Node.js** for backend services
