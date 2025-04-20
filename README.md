@@ -40,6 +40,7 @@ This project follows the **Behavior-Driven Development (BDD)** methodology. Belo
 - HTTP API interactions
 - Kafka-based messaging
 - Database persistence
+- Email dispatching
 
 # Test Strategy
 
@@ -67,10 +68,10 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 | Level             | Scope                                      | Tools / Frameworks                  |
 |------------------|--------------------------------------------|-------------------------------------|
-| ~~Unit Testing~~      | Individual functions, classes, modules     | Jest / Mocha / Chai                 |
-| Integration       | Interaction between internal components    | Cucumber.js, Supertest, KafkaJS, In-memory DBs   |
-| End-to-End (E2E)  | Full user scenarios across services        | Cucumber.js, Docker Compose, REST, Kafka |
-| Regression        | Ensure new features don't break existing   | Automated suite via CI              |
+| ~~Unit Testing~~      | Individual functions, classes, modules     | Mocha / Chai                 |
+| Integration       | Interaction between internal components    | Cucumber.js, Supertest, KafkaJS, Testcontainers  |
+| End-to-End (E2E)  | Full user scenarios across services        | Cucumber.js, Testcontainers, Axios, Kafka |
+| Regression        | Ensure new features don't break existing   | Github Actions              |
 
 ---
 
@@ -127,13 +128,14 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ---
 
-## 🔔 HTTP Testing (SuperTest)
+## 🔔 HTTP Testing (SuperTest and Axios)
 
 - Tests validate:
   - Request and response structure
   - Persistance
   - Alternative flows
-- Use Supertest to virtualize http calls
+- Use Supertest for white-box testing
+- Use Axios for black-box testing
 
 ---
 
@@ -146,6 +148,22 @@ This section outlines the strategy for ensuring quality and reliability across t
 - Use Kafka mocks or embedded Kafka during tests
 
 ---
+## ✉️ Email Testing (Mailpit)
+
+- Faker of a SMTP server
+  - catch outcoming emails
+  - Check email estructure
+  - For integration and accptance testing
+---
+
+## 🗄 Database Testing (mongodb)
+
+- A basic js library
+  - Seed data before test
+  - Assert database state after SUT operations
+  - Mainly oriented to integration testing 
+---
+
 
 ## ✅ Definition of Done
 
@@ -201,11 +219,31 @@ Stages:
 | Long Test Times             | Run tests in parallel, isolate services  |
 
 ---
+## Pending tasks
+
+   - ### Domain Driven Design 
+      The domain approach was avoid since the SUT is bussiness agnostic but should be considered in order to set effective mock an contract testing design.
+     - Mocks
+     - Contract testing
+   - ### Unit testing 
+      the services are just functional prototypes so each one is very coupled making it hard to test their components isolated, but a good unit testing implementation is an essential quality gate.
+   - ### SRE
+      Service Oriented Architectures usually encourage scalability, maintainability, shorter release cycles, etc. but them also add complexity understanding issues and risks. So a good obserbability approach is essential for quality assurance.  
+       - Performance testing
+       - Reliability testing
+       - logs
+       - metrics
+       - Traces
+---
 
 ## 📍 References
 
 - [Cucumber.js Documentation](https://github.com/cucumber/cucumber-js)
 - [KafkaJS Documentation](https://kafka.js.org/)
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
+- [Testcontainers](https://node.testcontainers.org/)
+- [mailpit](https://mailpit.axllent.org/)
+- [axios](https://axios-http.com/)
+- [supertest](https://github.com/ladjs/supertest)
 
 ---
