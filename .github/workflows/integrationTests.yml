@@ -29,7 +29,20 @@ jobs:
       - name: audit-service integration tests
         run: cd audit-service && npm install && npm run integration:test:audit && cd ..
 
-      - uses: deblockt/cucumber-report-annotations-action@v1.7
+      - name: Annotations for audit-service
+        uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "**/reports/report.json"
+          path: "audit-service/reports/report.ndjson"
+
+      - name: Annotations for email-service
+        uses: deblockt/cucumber-report-annotations-action@v1.7
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          path: "email-service/reports/report.ndjson"  
+
+      - name: Annotations for user-service
+        uses: deblockt/cucumber-report-annotations-action@v1.7
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          path: "user-service/reports/report.ndjson"      
