@@ -1,0 +1,30 @@
+name: Integration Tests
+
+on:
+  pull_request:
+
+jobs:
+  integration-tests:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - name: user-service integration tests
+        run: cd user-service && npm install && npm run integration:test:user && cd ..
+
+      - name: email-service integration tests
+        run: cd email-service && npm install && npm run integration:test:email && cd ..
+
+      - name: audit-service integration tests
+        run: cd audit-service && npm install && npm run integration:test:audit && cd ..  

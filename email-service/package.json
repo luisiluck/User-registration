@@ -1,0 +1,22 @@
+{
+    "name": "email-service-api",
+    "version": "1.0.0",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "test": "mocha 'test/unit/**/*.js'",
+        "integration:test:email": "cucumber-js test/integration/features/**/*.feature"
+    },
+    "dependencies": {
+        "kafkajs": "^2.2.4",
+        "nodemailer": "^6.10.0"
+    },
+    "devDependencies": {
+        "@cucumber/cucumber": "^11.2.0",
+        "mailpit-api": "^1.2.0",
+        "mocha": "^11.1.0",
+        "should": "^13.2.3",
+        "supertest": "^7.1.0",
+        "testcontainers": "^10.24.2"
+    }
+}
