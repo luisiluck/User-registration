@@ -89,7 +89,7 @@ services:
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
   
   audit:
-    image: audit-service
+    image: ghcr.io/luisiluck/user-registration/audit-service:latest
     container_name: audit
     depends_on:
       kafka-init-topics:
@@ -99,7 +99,7 @@ services:
       - MONGODB_URI=mongodb://db:27017
 
   email:
-    image: email-service
+    image: ghcr.io/luisiluck/user-registration/email-service:latest
     container_name: email
     depends_on:
       kafka-init-topics:
@@ -109,7 +109,7 @@ services:
       - SMTP_HOST=mailpit  
 
   user:
-    image: user-service
+    image: ghcr.io/luisiluck/user-registration/email-service:latest
     container_name: user
     ports:
       - "3000:3000"

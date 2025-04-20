@@ -1,0 +1,30 @@
+name: Acceptance tests
+
+on:
+  workflow_dispatch:
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - name: Acceptance Tests
+        run: cd acceptance-tests && npm install && npm run test:e2e 
+
+      - name: Publish report
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: acceptance-tests-report
+          path: ./reports
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4    
