@@ -109,7 +109,7 @@ services:
       - SMTP_HOST=mailpit  
 
   user:
-    image: ghcr.io/luisiluck/user-registration/email-service:latest
+    image: ghcr.io/luisiluck/user-registration/user-service:latest
     container_name: user
     ports:
       - "3000:3000"
