@@ -32,15 +32,21 @@ jobs:
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           path: "audit-service/reports/report.json"
+          name: audit-service report
+          show-global-summary-report: true
 
       - name: Annotations for email-service
         uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "email-service/reports/report.json"  
+          path: "email-service/reports/report.json"
+          name: email-service report
+          show-global-summary-report: true
 
       - name: Annotations for user-service
         uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "user-service/reports/report.json"      
+          path: "user-service/reports/report.json"
+          name: user-service report
+          show-global-summary-report: true
