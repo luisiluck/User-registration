@@ -8,6 +8,8 @@ setDefaultTimeout(120000);
 const kafkaClient = new KafkaClient('localhost:9092')
 const messages = new MessagesBox()
 
+let environment
+
 Given(/a user with email "(.+)" (does not exist|exists) in database/, async function (email, exists) {
     if (exists === 'exists' && !(await sut.userStore.userExists(email))) {
         const user = new sut.User('name', email, 'abc123')
@@ -40,7 +42,7 @@ Then('a {string} event should be produced with...', async function (topic, value
 });
 
 BeforeAll(async function () {
-    await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
+    environment = await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
     await sut.startDependencies();
     await messages.startConsumer(kafkaClient.getConsumer(), 'user.registered', 'user.verified', 'verification.requested')
 })
@@ -48,4 +50,5 @@ BeforeAll(async function () {
 AfterAll(async function () {
     await sut.stopDependencies();
     await kafkaClient.getConsumer().disconnect()
+    await environment.down({ timeout: 10 })
 })

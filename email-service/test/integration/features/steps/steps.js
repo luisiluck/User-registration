@@ -9,6 +9,8 @@ const kafkaClient = new KafkaClient('localhost:9092');
 const messages = new MessagesBox();
 const mailbox = new MailBox();
 
+let environment;
+
 Given('the Email service is running', async function () {
     await sut.startEmailService()
 });
@@ -31,7 +33,7 @@ Then(/a "(.+)" event should (be|not be) produced with\.\.\./, async function (to
 
 
 BeforeAll(async function () {
-    await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
+    environment = await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
     await messages.startConsumer(kafkaClient.getConsumer(), 'user.registered', 'user.verified', 'verification.requested')
 })
 
@@ -43,4 +45,5 @@ After(async function (){
 
 AfterAll(async function () {
     await kafkaClient.getConsumer().disconnect()
+    environment.down({ timeout: 10 })
 })

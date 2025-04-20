@@ -8,6 +8,8 @@ setDefaultTimeout(120000);
 const kafkaClient = new KafkaClient('localhost:9092');
 const dbClient = new DbClient(process.env.MONGODB_URI || "mongodb://localhost:27017", 'auditdb');
 
+let environment
+
 Given('the Audit service is running', async function () {
     await sut.startAuditService()
 });
@@ -24,7 +26,7 @@ Then('the {string} type should be stored with...', async function (type, payload
   });
 
 BeforeAll(async function () {
-    await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
+    environment = await new DockerComposeEnvironment('test/integration/', 'docker-compose.yml').up();
     await dbClient.connect()
 })
 
@@ -36,4 +38,5 @@ After(async function (){
 AfterAll(async function () {
     await kafkaClient.getProducer().disconnect()
     await dbClient.disconnect()
+    await environment.down({ timeout: 10 })
 })
