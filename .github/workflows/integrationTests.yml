@@ -33,16 +33,16 @@ jobs:
         uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "audit-service/reports/report.ndjson"
+          path: "audit-service/reports/report.json"
 
       - name: Annotations for email-service
         uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "email-service/reports/report.ndjson"  
+          path: "email-service/reports/report.json"  
 
       - name: Annotations for user-service
         uses: deblockt/cucumber-report-annotations-action@v1.7
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          path: "user-service/reports/report.ndjson"      
+          path: "user-service/reports/report.json"      
