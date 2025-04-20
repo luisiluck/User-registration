@@ -28,6 +28,7 @@ This system allows users to register with their email and password, and requires
 - **Node.js** for backend services
 - **Express** for HTTP server
 - **Apache Kafka** for asynchronous event-based communication
+- **MongoDB** for unestructured data persistence
 - **Docker** for containerization
 
 # BDD Toolchain for Microservices Project
@@ -35,20 +36,24 @@ This system allows users to register with their email and password, and requires
 This project follows the **Behavior-Driven Development (BDD)** methodology. Below is a proposed toolchain for implementing automated tests covering:
 - HTTP API interactions
 - Kafka-based messaging
+- Database persistence
 
 # Test Strategy
 
 ## Overview
 
-This section outlines the strategy for ensuring quality and reliability across the services in this system. The architecture involves multiple services communicating over HTTP and Kafka. We will apply a Behavior-Driven Development (BDD) approach supported by automated testing across different levels.
+This section outlines the strategy for ensuring quality and reliability across the services in this system. The architecture involves multiple services communicating over Kafka, persisting over MongoDB and exposing a basic RESTful API. We will apply a Behavior-Driven Development (BDD) approach supported by automated testing across different levels.
 
+>[!note]
+> - [User Stories](/UserSories.md)
+> - [Integration scenarios](/IntegrationScenarios.md)
 ---
 
 ## Objectives
 
 - Validate functional requirements
-- Ensure reliable communication between services via HTTP and Kafka
-- Automate tests at different layers (unit, integration, end-to-end)
+- Ensure reliable communication between services via Kafka
+- Automate tests at different layers (integration, end-to-end)
 - Detect regressions early via CI pipelines
 - Maintain traceability and reproducibility of test results
 
@@ -59,7 +64,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 | Level             | Scope                                      | Tools / Frameworks                  |
 |------------------|--------------------------------------------|-------------------------------------|
-| Unit Testing      | Individual functions, classes, modules     | Jest / Mocha / Chai                 |
+| ~~Unit Testing~~      | Individual functions, classes, modules     | Jest / Mocha / Chai                 |
 | Integration       | Interaction between internal components    | Cucumber.js, Supertest, KafkaJS, In-memory DBs   |
 | End-to-End (E2E)  | Full user scenarios across services        | Cucumber.js, Docker Compose, REST, Kafka |
 | Regression        | Ensure new features don't break existing   | Automated suite via CI              |
@@ -68,7 +73,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ## 🔁 Test Lifecycle
 
-1. **Test Planning**  
+1. **Test Planning**  [Planning](https://trello.com/b/SJi90Rb6/user-registration)   
    Define scope, scenarios, responsibilities
 
 2. **Test Design**  
@@ -93,11 +98,11 @@ This section outlines the strategy for ensuring quality and reliability across t
 | Purpose            | Tool                                     |
 |--------------------|------------------------------------------|
 | BDD Framework      | Cucumber.js                              |
-| API Testing        | Supertest, Postman, Insomnia             |
+| API Testing        | Supertest, Axios                         |
 | Messaging (Kafka)  | KafkaJS, Testcontainers                  |
-| Test Data Setup    | Faker.js, MongoDB Seeding, Mock Servers  |
-| Assertion / Mocking| Chai, Sinon, nock                        |
-| Reporting          | Mochawesome, Cucumber HTML Reporter      |
+| Test Data Setup    | Faker.js, Factory-js                     |
+| Assertion          | Should                                   |
+| Reporting          | JSON, Cucumber HTML Reporter             |
 | CI/CD Integration  | GitHub Actions, Docker                   |
 
 ---
@@ -154,8 +159,8 @@ Each feature is considered **done** when:
 ## 📊 Reporting & Coverage
 
 - Generate test reports for:
-  - Unit: `nyc`, `mochawesome`
-  - Integration/E2E: `cucumber-html-reporter`
+  - ~~Unit: `nyc`, `mochawesome`~~
+  - Integration/E2E: `JSON/cucumber-html-reporter`
 - Code coverage threshold: **≥ 80%**
 - Automated tests effort (Mike Cohn 2009)
   - Unit test: 50%
@@ -169,7 +174,7 @@ Each feature is considered **done** when:
 
 All tests are executed in CI pipelines on:
 
-- Push to `release` or `main` branches
+- Push to `release` or `master` branches
 - Pull Request events
 - Nightly regression runs
 
