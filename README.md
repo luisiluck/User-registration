@@ -1,18 +1,18 @@
 # User Registration & Email Verification System
 
-## Overview
+## 📋 Overview
 
 This system allows users to register with their email and password, and requires email verification to activate the account. It follows a service-oriented architecture and includes event-driven communication via Kafka.
 
-## Services
+## 🌐 Services
 
 - **User Service**: Handles user registration, validation, persistence, and emits events for further processing.
 - **Email Service**: Listens for user registration events and sends verification emails to users.
 - **Audit Service**: Subscribes to key events (e.g., registration, verification) and logs them for traceability and compliance purposes.
 > Use Cases
-![use cases](/src/usecases.png)
+> ![use cases](/src/usecases.png)
 
-## Workflow
+## ⏩ Workflow
 
 1. A user submits their registration details.
 2. If valid, the `User Service` creates a new unverified user and emits a `user.registered.event`.
@@ -21,12 +21,12 @@ This system allows users to register with their email and password, and requires
 5. The `User Service` validates the token and, if valid, updates the user's status to "verified", emitting a `user.verified.event`.
 6. The `Audit Service` logs the registration, verification and email dispatching as `user.registered.audit`, `user.updated.audit` and `user.verification.request.audit`.
 > User registration sequence
-![sequence diagram](src/sequence.jpg)
+> ![sequence diagram](src/sequence.jpg)
 
->Deploy view
-![deploy diagram](src/deploydiagram.jpg)
+> Deploy view
+> ![deploy diagram](src/deploydiagram.jpg)
 
-## Technologies
+## 🛠️ Technologies
 
 - **Node.js** for backend services
 - **Express** for HTTP server
@@ -34,7 +34,7 @@ This system allows users to register with their email and password, and requires
 - **MongoDB** for unestructured data persistence
 - **Docker** for containerization
 
-# BDD Toolchain for Microservices Project
+# ⚙️ BDD Toolchain for Microservices Project
 
 This project follows the **Behavior-Driven Development (BDD)** methodology. Below is a proposed toolchain for implementing automated tests covering:
 - HTTP API interactions
@@ -42,9 +42,9 @@ This project follows the **Behavior-Driven Development (BDD)** methodology. Belo
 - Database persistence
 - Email dispatching
 
-# Test Strategy
+# 🧪 Test Strategy
 
-## Overview
+## 📋 Overview
 
 This section outlines the strategy for ensuring quality and reliability across the services in this system. The architecture involves multiple services communicating over Kafka, persisting over MongoDB and exposing a basic RESTful API. We will apply a Behavior-Driven Development (BDD) approach supported by automated testing across different levels.
 
@@ -53,7 +53,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 > - [Integration scenarios](/IntegrationScenarios.md)
 ---
 
-## Objectives
+## 🎯 Objectives
 
 - Validate functional requirements
 - Ensure reliable communication between services via Kafka
@@ -64,11 +64,11 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ---
 
-## Test Levels
+## 🎚️ Test Levels
 
 | Level             | Scope                                      | Tools / Frameworks                  |
 |------------------|--------------------------------------------|-------------------------------------|
-| ~~Unit Testing~~      | Individual functions, classes, modules     | Mocha / Chai                 |
+| ~~Unit Testing~~[*](https://github.com/luisiluck/User-registration#unit-testing)      | Individual functions, classes, modules     | Mocha / Chai                 |
 | Integration       | Interaction between internal components    | Cucumber.js, Supertest, KafkaJS, Testcontainers  |
 | End-to-End (E2E)  | Full user scenarios across services        | Cucumber.js, Testcontainers, Axios, Kafka |
 | Regression        | Ensure new features don't break existing   | Github Actions              |
@@ -97,7 +97,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ---
 
-## Testing Tools
+## 🧰 Testing Tools
 
 | Purpose            | Tool                                     |
 |--------------------|------------------------------------------|
@@ -120,7 +120,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ---
 
-## 📦 Test Data Management
+## 📝 Test Data Management
 
 - Use seed scripts for predictable test environments
 - Mask or anonymize production data for safe usage
@@ -128,7 +128,7 @@ This section outlines the strategy for ensuring quality and reliability across t
 
 ---
 
-## 🔔 HTTP Testing (SuperTest and Axios)
+## 🔗 HTTP Testing (SuperTest and Axios)
 
 - Tests validate:
   - Request and response structure
@@ -219,8 +219,11 @@ Stages:
 | Long Test Times             | Run tests in parallel, isolate services  |
 
 ---
-## Pending tasks
+## 📌 Pending tasks
 
+   - ### Automated test framework refactorization
+      The Acceptance Tests project and each integration test project have common tools which should be arranged in a library in order to ensure the reutilization and quick deploy in new projects, the framework maintenance, scalability, etc.
+      
    - ### Domain Driven Design 
       The domain approach was avoid since the SUT is bussiness agnostic but should be considered in order to set effective mock an contract testing design.
      - Mocks
