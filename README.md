@@ -1,4 +1,4 @@
-# User Registration & Email Verification System
+# 👤✍ User Registration & Email Verification System
 
 ## 📋 Overview
 
